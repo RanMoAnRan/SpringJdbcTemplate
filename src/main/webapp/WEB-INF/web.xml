@@ -1,0 +1,29 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+
+  <servlet>
+    <servlet-name>SpringServlet</servlet-name>
+    <servlet-class>com.jing.springlistenner.web.SpringServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SpringServlet</servlet-name>
+    <url-pattern>/springservlet</url-pattern>
+  </servlet-mapping>
+
+  <!--指定applicationContext.xml的位置-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:Springapplicaton.xml</param-value>
+  </context-param>
+
+  <!--配置spring监听器-->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+</web-app>
+
+

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/tx
+      http://www.springframework.org/schema/tx/spring-tx.xsd
+      http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--开启注解扫描-->
+    <context:component-scan base-package="com.jing.shiwu"></context:component-scan>
+
+    <!--引入外部资源-->
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+
+    <!--开启注解事务管理器-->
+    <tx:annotation-driven></tx:annotation-driven>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <!-- 配置一个事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!--配置事务策略-->
+
+    <!--加入事务注解取消xml配置-->
+
+   <!-- <tx:advice id="txAdvice">
+        &lt;!&ndash; 配置事务的属性&ndash;&gt;
+        <tx:attributes>
+            &lt;!&ndash;
+                指定对哪些方法使用事务
+                name:方法名称，使用通配符* 代表对所有方法使用事务
+                isolation：配置事务的隔离级别，默认使用当前数据库默认的隔离级别
+                read-only：是否只读，一般对增删改方法使用false，表示读写，对查询方法使用true，表示只读即可，默认是读写。
+                propagation：指定事务的传播行为，默认REQUIRED，增删改的时候使用，SUPPORTS：用于查询
+                no-rollback-for：指定对哪种异常不回滚
+                rollback-for：指定对哪种异常进行回滚
+                timeout：设置事务的超时时间，单位是秒，默认是-1 ：永不超时。
+             &ndash;&gt;
+
+            <tx:method name="*"/>
+
+            &lt;!&ndash; 表示只对query开头的方法使用只读事务和SUPPORTS的传播行为
+                相似度越高，匹配度越高。因此query*代表了所有以query开头的方法都会使用它的事务配置。
+            &ndash;&gt;
+            &lt;!&ndash;<tx:method name="query*" read-only="true" propagation="SUPPORTS"/>&ndash;&gt;
+
+        </tx:attributes>
+    </tx:advice>
+
+    &lt;!&ndash;配置AOP&ndash;&gt;
+    <aop:config>
+        &lt;!&ndash;配置切入点表达式&ndash;&gt;
+        <aop:pointcut id="pt" expression="execution(* com.jing.shiwu.service.SWAccountServiceImpl.*(..))"></aop:pointcut>
+
+        &lt;!&ndash;配置事务管理器应用到切入点&ndash;&gt;
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pt"></aop:advisor>
+
+    </aop:config>-->
+
+</beans>
